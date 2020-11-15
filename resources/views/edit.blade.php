@@ -11,7 +11,7 @@
     </head>
     <body>
         <h1>Blog name</h1>
-        <form action='/posts/{{ $post->id }}' method="POST">
+        <form action='/posts/{{ $post->id }}' method='POST'>
             {{ csrf_field() }}
             @method('PUT')
             <div class="title">
@@ -29,13 +29,12 @@
                         <option value="{{ $category->id }}"
                             @if (in_array($category->id,$post->categories->pluck('id')->all())
                                 selected
-                            @endif
-                        >
+                            @endif>
                         {{ $category->name }}    
                         </option>
                 </select>
             </div>
-            <input type="submit" value="update"/>
+            <input type="submit" value="update">
         </form>
         <div class="back">[<a href="/posts/{{ $post->id }}">back</a>]</div>
     </body>

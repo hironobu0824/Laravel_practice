@@ -56,9 +56,7 @@
             <input type="submit" value="Send">
           </form>
         </div>
-        <div class="back">[<a href="/">back</a>]</div>
-        
- </div>
+        <div class="back">[<a href='/'>back</a>]</div>
         <script>
             function deletePost(e){
                 'use strict';

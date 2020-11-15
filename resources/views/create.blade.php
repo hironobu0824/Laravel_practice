@@ -20,7 +20,7 @@
             </div>
             <div class="body">
                 <h2>Body</h2>
-                <textarea name="post[body]" placeholder="今日も1日お疲れ様でした。">{{ old('post.title') }}</textarea>
+                <textarea name="post[body]" placeholder="今日も1日お疲れ様でした。">{{ old('post.body') }}</textarea>
                 <p class="body_error" style="color:red">{{ $errors->first('post.body') }}</p>
             </div>
             <div class='content_category'>

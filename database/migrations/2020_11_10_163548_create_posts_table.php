@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
         });
-        DB::statement("ALTER TABLE posts COMMENT'記事'");
+        DB::statement("ALTER TABLE posts COMMENT '記事'");
     }
 
     /**

@@ -18,4 +18,4 @@ Route::post('/posts','PostController@store');
 Route::get('/posts/{post}/edit','PostController@edit');
 Route::put('/posts/{post}','PostController@update');
 Route::delete('/posts/{post}','PostController@destroy');
-Route::post('/posts/{post}','CommentController@store');
+Route::post('/posts/{post}/comment','CommentController@store');

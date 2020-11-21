@@ -9,6 +9,8 @@ class Post extends Model
 {
     use SoftDeletes;
     
+    const DEFAULT_PAGINATE_COUNT = 5;
+    
     protected $fillable = [
         'title',
         'body',
@@ -21,54 +23,49 @@ class Post extends Model
     
     public function categories()
     {
-        return $this->belongsToMany('App\category');
+        return $this->belongsToMany('App\Category');
     }
     
     public function getCommentsPaginate()
     {
-        return $this->comments()->orderBy('updated_at','DESC')->paginate(5);
+        return $this->comments()->orderBy('updated_at', 'DESC')->paginate(self::DEFAULT_PAGINATE_COUNT);
     }
     
-    public function getPaginateByLimit(int $limit_count = 5)
+    public function getPaginateByLimit()
     {
-        return $this->orderBy('updated_at','DESC')->paginate($limit_count);
+        return $this->orderBy('updated_at', 'DESC')->paginate(self::DEFAULT_PAGINATE_COUNT);
     }
     
     public function createWithRelation($input)
     {
-        try{
+        try {
             $post = $this->create($input);
             $post->categories()->attach($input['categories']);
             return $post;
-        } catch (Exception $e){
+        } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
-        
     }
     
     public function updateWithRelation($input)
     {
-        try{
-            $post = $this->findOrFainl($id);
-            $post->fill($input)->save();
-            $post->categories()->sync($input['categories']);
-            return $post;
-        } catch (Exception $e){
+        try {
+            $this->fill($input)->save();
+            $this->categories()->sync($input['categories']);
+            return $this;
+        } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
-        
     }
     
     public function deleteWithRelation()
     {
-        try{
-            $post = $this->findOrFainl($id);
-            $post->comments()->delete();
-            $post->categories()->detach();
-            $post->delete();
-        }catch(\Exception $e){
+        try {
+            $this->comments()->delete();
+            $this->categories()->detach();
+            $this->delete();
+        } catch (\Exceptions $e) {
             throw new Exception($e->getMessage());
         }
     }
 }
-

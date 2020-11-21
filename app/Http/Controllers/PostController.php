@@ -6,19 +6,20 @@ use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Category;
+use App\Comment;
 
 class PostController extends Controller
 {
    public function index(Post $post)
    {
-       return view('index')->with(['posts' => $post->getPaginateByLimit()]);
+       return view('posts/index')->with(['posts' => $post->getPaginateByLimit()]);
    }
  
    public function show(Post $post)
    {
-       return view('post/show')->with([
-          'post' => $post
-          'comments' => $post->getCommentsPaginate();
+      return view('posts/show')->with([
+        'post' => $post,
+        'comments' => $post->getCommentsPaginate(),
       ]);
    }
 
@@ -30,26 +31,24 @@ class PostController extends Controller
    public function store(PostRequest $request, Post $post)
    {
        $input = $request['post'];
-       $post->fill($input)->save();
-       return redirect('/posts/' . $post->id);
+       $created_post = $post->createWithRelation($input);
+       return redirect('/posts/' . $created_post->id);
    }
      
-   public function edit(Post $post)
+   public function edit(Post $post, Category $category)
    {
-       return view('edit')->with(['post' => $post]);
+      return view('posts/edit')->with([
+         'post' => $post->findOrFail($post->id),
+         'categories' => $category->all(),
+         
+      ]);
    }
     
-   public function update(PostRequest $request,Post $post)
+   public function update(PostRequest $request, Post $post)
    {
        $input = $request['post'];
-       $post->fill($input)->save();
-       return redirect('/posts/' . $post->id);
-   }
-   
-   public function destroy(Post $post)
-   {
-       $post->delete();
-       return redirect('/');
+       $target_post = $post->updateWithRelation($input);
+       return redirect('/posts/' . $target_post->id);
    }
    
    public function destroy(Post $post)

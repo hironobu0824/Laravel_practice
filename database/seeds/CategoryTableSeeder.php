@@ -11,32 +11,34 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('categories')->insert(
+        DB::table('categories')->truncate();
+        
+        DB::table('categories')->insert([
             [
-                'name' =>'暮らし',
+                'name' => '暮らし',
                 'updated_at' => now(),
                 'created_at' => now(),
             ],    
             [
-                'name' =>'お笑い',
+                'name' => 'お笑い',
                 'updated_at' => now(),
                 'created_at' => now(),
             ],    
             [
-                'name' =>'野球',
+                'name' => '野球',
                 'updated_at' => now(),
                 'created_at' => now(),
             ],    
             [
-                'name' =>'音楽',
+                'name' => '音楽',
                 'updated_at' => now(),
                 'created_at' => now(),
             ],    
             [
-                'name' =>'ゲーム',
+                'name' => 'ゲーム',
                 'updated_at' => now(),
                 'created_at' => now(),
             ],    
-        )
+        ]);
     }
 }

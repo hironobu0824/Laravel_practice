@@ -11,31 +11,28 @@
     </head>
     <body>
         <h1>Blog name</h1>
-        <form action='/posts/{{ $post->id }}' method='POST'>
+        <form action="/posts" method="POST">
             {{ csrf_field() }}
-            @method('PUT')
             <div class="title">
                 <h2>Title</h2>
-                <input type="text" name="post[title]" placeholder="タイトル" value="{{ $post->title }}"/>
+                <input type="text" name="post[title]" placeholder="タイトル" value="{{ old('post.title') }}"/>
+                <p class="title_error" style="color:red">{{ $errors->first('post.title') }}</p>
             </div>
             <div class="body">
                 <h2>Body</h2>
-                <textarea name="post[body]" placeholder="今日も1日お疲れ様でした。">{{ $post->body }}</textarea>
+                <textarea name="post[body]" placeholder="今日も1日お疲れ様でした。">{{ old('post.body') }}</textarea>
+                <p class="body_error" style="color:red">{{ $errors->first('post.body') }}</p>
             </div>
-            <div class="category">
+            <div class='content_category'>
                 <h2>カテゴリ</h2>
                 <select name="post[categories][]" multiple>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}"
-                            @if (in_array($category->id,$post->categories->pluck('id')->all())
-                                selected
-                            @endif>
-                        {{ $category->name }}    
-                        </option>
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
                 </select>
             </div>
-            <input type="submit" value="update">
+            <input type="submit" value="store"/>
         </form>
-        <div class="back">[<a href="/posts/{{ $post->id }}">back</a>]</div>
+        <div class="back">[<a href="/">back</a>]</div>
     </body>
 </html>

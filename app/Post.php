@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Post extends Model
 {
@@ -14,6 +15,7 @@ class Post extends Model
     protected $fillable = [
         'title',
         'body',
+        'user_id',
     ];
 
     public function comments()
@@ -24,6 +26,16 @@ class Post extends Model
     public function categories()
     {
         return $this->belongsToMany('App\Category');
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+    
+    public function likes()
+    {
+        return $this->hasMany(Like::class,'post_id');
     }
     
     public function getCommentsPaginate()
@@ -68,4 +80,22 @@ class Post extends Model
             throw new Exception($e->getMessage());
         }
     }
+    
+    public function is_liked_by_auth_user()
+    {
+        $id = Auth::id();
+        
+        $likers = array();
+        foreach($this->likes as $like) {
+            array_push($likers,$like->user_id);
+        }
+        
+        if (in_array($id,$likers)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    
 }

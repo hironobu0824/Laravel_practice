@@ -15,6 +15,7 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('user_id')->comment('ユーザID');
             $table->string('title',255)->comment('タイトル');
             $table->text('body')->comment('本文');
             $table->timestamps();

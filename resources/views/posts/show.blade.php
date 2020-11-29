@@ -15,7 +15,7 @@
     <body>
     <header>
         <p class="blogname">高橋宏暢のブログ</p>
-        <div class="container">
+        <div class="mycontainer">
             <p class="edit item"><a class="btn btn1" href="/posts/{{ $post->id }}/edit"><i class="far fa-edit"></i>edit</a></p>
             <form action="/posts/{{ $post->id }}" id="form_delete" method="post">
                 {{ csrf_field() }}
@@ -31,6 +31,10 @@
         </div>
     </header>
     <main>
+        <p class="heading">Author</p>
+        <div class="content">
+           <p>{{ optional($post->user)->name }}</p>
+        </div>
         <p class="heading">Title</p>
         <div class="content">
            <h3>{{ $post->title }}</h3>
@@ -38,6 +42,13 @@
         <p class="heading">本文</p>
         <div class="content">
            <p class=>{{ $post->body }}</p>    
+        </div>
+        <div>
+            @if($post->is_liked_by_auth_user())
+                <a href="{{ route('post.unlike',['id' => $post->id])  }}" class="btn">いいね<span class="badge">{{ $post->likes->count() }}</span></a>
+            @else
+               <a href="{{ route('post.like',['id' => $post->id])  }}" class="btn">いいね<span class="badge">{{ $post->likes->count() }}</span></a>
+            @endif
         </div>
         <div class="content_comment">
             <p class="heading">コメント</p>
@@ -89,3 +100,5 @@
         </script>
     </body>
 </html>
+
+

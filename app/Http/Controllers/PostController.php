@@ -16,9 +16,9 @@ class PostController extends Controller
  
    public function show(Post $post)
    {
-       return view('post/show')->with([
-          'post' => $post
-          'comments' => $post->getCommentsPaginate();
+      return view('posts/show')->with([
+         'post' => $post,
+         'comments' => $post->getCommentsPaginate(),
       ]);
    }
 
@@ -44,12 +44,6 @@ class PostController extends Controller
        $input = $request['post'];
        $post->fill($input)->save();
        return redirect('/posts/' . $post->id);
-   }
-   
-   public function destroy(Post $post)
-   {
-       $post->delete();
-       return redirect('/');
    }
    
    public function destroy(Post $post)

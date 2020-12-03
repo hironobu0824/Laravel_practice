@@ -21,6 +21,7 @@ class PostController extends Controller
    public function show(Post $post, User $user)
    {
       return view('posts/show')->with([
+
        'post' => $post,
        'comments' => $post->getCommentsPaginate(),
        'user' => $user,
@@ -90,8 +91,5 @@ class PostController extends Controller
       
       return redirect()->back();
    }
-   
-   public function hello() {
-      return 'hello';
-   }
+
 }

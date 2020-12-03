@@ -45,7 +45,7 @@ class CategoryTableSeeder extends Seeder
                 'created_at' => now(),
             ],    
             [
-                'name' => '大学の',
+                'name' => '大学の勉強',
                 'updated_at' => now(),
                 'created_at' => now(),
             ],    
